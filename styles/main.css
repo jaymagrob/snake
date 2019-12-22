@@ -1,0 +1,36 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.grid {
+  height: 440px;
+  width: 440px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.grid-item {
+  height: 40px;
+  width: 40px;
+  border: black dotted 1px
+}
+
+.snakehead {
+  background: darkgreen;
+}
+
+.snakebody {
+  background: green;
+}
+
+.apple {
+  background: red;
+}

@@ -9,11 +9,13 @@ function init() {
   //Variables
   const width = 11
   let snakePosition = Math.floor(width * width / 2 )
+  let snakeArray = [snakePosition]
   let fruitPosition = Math.floor(Math.random() * squares.length)
   const speed = 200
   let moveDirection = 1
   let gamePlaying = false
 
+  // Make Table
   Array(width * width).join('.').split('.').forEach((i, index) => {
     const square = document.createElement('div')
     square.classList.add('grid-item')
@@ -22,7 +24,16 @@ function init() {
     grid.appendChild(square)
   })
 
+
+
   //Functions
+  function snakeMovementArray() {
+    snakeArray.unshift(snakePosition)
+    console.log(snakePosition, fruitPosition)
+    
+  
+  }
+
   function startingHead() {
     squares.forEach(i => i.classList.remove('snakehead'))
     squares[snakePosition].classList.add('snakehead')
@@ -55,6 +66,7 @@ function init() {
     }
     snakePosition += moveDirection
     startingHead()
+    snakeMovementArray()
     pointDetection()
   }
 
@@ -66,7 +78,10 @@ function init() {
   }
 
   function pointDetection() {
-    snakePosition === fruitPosition ? console.log('point') : console.log('miss')
+    if (snakePosition === fruitPosition) {
+      console.log('point')
+      randomFruit()
+    } 
   }
 
   function keysFunction(e) {

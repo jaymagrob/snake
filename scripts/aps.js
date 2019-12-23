@@ -9,14 +9,15 @@ function init() {
   //Variables
   const width = 11
   let snakePosition = Math.floor(width * width / 2 )
-  const speed = 500
+  let fruitPosition = Math.floor(Math.random() * squares.length)
+  const speed = 200
   let moveDirection = 1
   let gamePlaying = false
 
   Array(width * width).join('.').split('.').forEach((i, index) => {
     const square = document.createElement('div')
     square.classList.add('grid-item')
-    square.innerHTML = `${index} - ${index % width}`
+    square.innerHTML = `${index} - ${Math.floor(index / width)}`
     squares.push(square)
     grid.appendChild(square)
   })
@@ -32,13 +33,29 @@ function init() {
   }
 
   function randomFruit() {
+    fruitPosition = Math.floor(Math.random() * squares.length)
     squares.forEach((i) => i.classList.remove('apple'))
-    squares[Math.floor(Math.random() * squares.length)].classList.add('apple')
+    squares[fruitPosition].classList.add('apple')
   }
 
+
+
   function startMoving() {
+    if (snakePosition % width + 1 === width && moveDirection === 1) {
+      snakePosition -= width
+    }
+    if (snakePosition % width === 0 && moveDirection === -1) {
+      snakePosition += width
+    }
+    if (Math.floor(snakePosition / width) === 0 && moveDirection === -width) {
+      snakePosition += width * width
+    }
+    if (Math.floor(snakePosition / width) === width - 1 && moveDirection === +width) {
+      snakePosition -= width * width
+    }
     snakePosition += moveDirection
     startingHead()
+    pointDetection()
   }
 
   function startGame() {
@@ -46,6 +63,10 @@ function init() {
       const timerStart = setInterval(startMoving, speed)
       gamePlaying = true
     }
+  }
+
+  function pointDetection() {
+    snakePosition === fruitPosition ? console.log('point') : console.log('miss')
   }
 
   function keysFunction(e) {
@@ -66,9 +87,13 @@ function init() {
     }
   }
 
+  //Game loaded
+  startingHead()
+  randomFruit()
+
   //Event Listeners
 
-  btn.addEventListener('click', startingHead)
+  // btn.addEventListener('click', startingHead) //used to check a function
   window.addEventListener('keydown', keysFunction)
 
 }

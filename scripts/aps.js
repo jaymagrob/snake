@@ -137,16 +137,16 @@ function init() {
     startGame()
     switch (e.keyCode) {
       case 39:
-        moveDirection = 1
+        (snakeArray.length > 0 && moveDirection === -1) ? moveDirection = -1 : moveDirection = 1
         break
       case 37:
-        moveDirection = -1      
+        (snakeArray.length > 0 && moveDirection === 1) ? moveDirection = 1 : moveDirection = -1
         break
       case 40:
-        moveDirection = width
+        (snakeArray.length > 0 && moveDirection === -width) ? moveDirection = -width : moveDirection = +width
         break
       case 38:
-        moveDirection = -width
+        (snakeArray.length > 0 && moveDirection === +width) ? moveDirection = +width : moveDirection = -width
         break
     }
   }

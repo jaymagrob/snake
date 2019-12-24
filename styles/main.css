@@ -23,15 +23,42 @@ body {
   width: 40px;
   border: black dotted 1px
 }
+.grid-lost {
+  background: #222;
+}
 
 .snakehead {
   background: darkgreen;
+  border-radius: 10%;
+  padding: 2%;
 }
 
 .snakebody {
   background: green;
+  border-radius: 10%;
+  border: 2 solid transparent;
+  padding: 2%;
 }
 
 .apple {
   background: red;
 }
+
+.reset {
+  position: fixed;
+  top: 45%;
+  width: 440px;
+  align-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  font-size: 20px;
+  padding: 20px;
+  background: green;
+}
+
+.hidden {
+  display: none;
+} 

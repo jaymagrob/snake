@@ -1,5 +1,6 @@
 //! Still to work on
-//? Score  add to display
+//? Reset
+//? Move direction fix
 //? High score
 //? Mobile keytouch
 
@@ -13,24 +14,26 @@ function init() {
   const squares = []
   const btn = document.querySelector('button')
   const scoreDiv = document.querySelector('.score')
+  const resetBar = document.querySelector('.reset')
+  const testBtn = document.querySelector('.test')
   
   //Variables
   const width = 11
   let snakePosition = Math.floor(width * width / 2 )
   let snakeArray = [snakePosition]
   let fruitPosition = Math.floor(Math.random() * squares.length)
-  const speed = 50
+  const speed = 200
   let moveDirection = 1
   let gamePlaying = false
   let timerStart = ''
   let score = 0
   let pointsAvailable = 31
 
+
   // Make Table
-  Array(width * width).join('.').split('.').forEach((i, index) => {
+  Array(width * width).join('.').split('.').forEach(() => {
     const square = document.createElement('div')
     square.classList.add('grid-item')
-    square.innerHTML = `${index} - ${Math.floor(index / width)}`
     squares.push(square)
     grid.appendChild(square)
   })
@@ -52,13 +55,23 @@ function init() {
     snakeArray.forEach(i => squares[i].classList.add('snakebody'))
   }
 
-  function clearBoard() {
-    squares.forEach((i) => i.className = 'grid-item')
+  function changeBoard() {
+    grid.classList.toggle('grid-lost')
   }
+
+  function resetAppear() {
+    resetBar.classList.toggle('hidden')
+  }
+
+  
+  
+
 
   function endGame() {
     clearInterval(timerStart)
-    console.log('end')
+    gamePlaying = false
+    changeBoard()
+    resetAppear()
   }
 
   function snakeCollision() {
@@ -138,15 +151,43 @@ function init() {
     }
   }
 
+  
+  function clearBoard() {
+    squares.forEach(i => i.className = 'grid-item')
+  }
+  
+  
+  
+  function resetGame() {
+    resetAppear()
+    changeBoard()
+    clearBoard()
+    snakePosition = Math.floor(width * width / 2 )
+    snakeArray = [snakePosition]
+    fruitPosition = Math.floor(Math.random() * squares.length)
+    score = 0
+    pointsAvailable = 31
+    startingHead()  
+    randomFruit() 
+  }
+
   //Game loaded
   startingHead()
   randomFruit()
 
   //Event Listeners
-
-  // btn.addEventListener('click', startingHead) //used to check a function
+  testBtn.addEventListener('click', clearBoard)
+  btn.addEventListener('click', resetGame) //used to check a function
   window.addEventListener('keydown', keysFunction)
 
 }
 
 window.addEventListener('DOMContentLoaded',init)
+
+// window.addEventListener('touchstart',(e) => {
+//   console.log(e)
+// })
+
+// window.addEventListener('touchend',(e) => {
+//   console.log(e)
+// })

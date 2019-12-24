@@ -1,5 +1,5 @@
 //! Still to work on
-//? Score  
+//? Score  add to display
 //? High score
 //? Mobile keytouch
 
@@ -12,6 +12,7 @@ function init() {
   const grid = document.querySelector('.grid')
   const squares = []
   const btn = document.querySelector('button')
+  const scoreDiv = document.querySelector('.score')
   
   //Variables
   const width = 11
@@ -114,7 +115,7 @@ function init() {
     if (snakePosition === fruitPosition) {
       score += pointsAvailable
       pointsAvailable = 31
-      console.log(score)
+      scoreDiv.innerHTML = `Score: ${score}`
       randomFruit()
     } 
   }

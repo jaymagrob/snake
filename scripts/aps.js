@@ -1,3 +1,12 @@
+//! Still to work on
+  //? Collisition detection
+  //? Random apple not appearing in string
+  //? High score
+  //? Score
+  //? Mobile keytouch
+
+
+
 function init() {
 
 
@@ -11,7 +20,7 @@ function init() {
   let snakePosition = Math.floor(width * width / 2 )
   let snakeArray = [snakePosition]
   let fruitPosition = Math.floor(Math.random() * squares.length)
-  const speed = 200
+  const speed = 100
   let moveDirection = 1
   let gamePlaying = false
 
@@ -29,14 +38,18 @@ function init() {
   //Functions
   function snakeMovementArray() {
     snakeArray.unshift(snakePosition)
-    console.log(snakePosition, fruitPosition)
+    if (!(snakePosition === fruitPosition)) {
+      snakeArray.pop()
+    }
+    console.log(snakeArray)
     
-  
   }
 
   function startingHead() {
     squares.forEach(i => i.classList.remove('snakehead'))
+    squares.forEach(i => i.classList.remove('snakebody'))
     squares[snakePosition].classList.add('snakehead')
+    snakeArray.forEach(i => squares[i].classList.add('snakebody'))
   }
 
   function clearBoard() {
@@ -47,6 +60,14 @@ function init() {
     fruitPosition = Math.floor(Math.random() * squares.length)
     squares.forEach((i) => i.classList.remove('apple'))
     squares[fruitPosition].classList.add('apple')
+    while (snakeArray.indexOf(fruitPosition) !== -1) {
+      fruitPosition = Math.floor(Math.random() * squares.length)
+      squares.forEach((i) => i.classList.remove('apple'))
+      squares[fruitPosition].classList.add('apple')
+    }
+
+    
+    
   }
 
 
@@ -74,6 +95,7 @@ function init() {
     if (!gamePlaying) {
       const timerStart = setInterval(startMoving, speed)
       gamePlaying = true
+      snakeArray.pop()
     }
   }
 

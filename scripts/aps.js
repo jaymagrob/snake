@@ -1,6 +1,4 @@
 //! Still to work on
-  //? Collisition detection
-  //? Random apple not appearing in string
   //? High score
   //? Score
   //? Mobile keytouch
@@ -23,6 +21,7 @@ function init() {
   const speed = 100
   let moveDirection = 1
   let gamePlaying = false
+  let timerStart = ''
 
   // Make Table
   Array(width * width).join('.').split('.').forEach((i, index) => {
@@ -41,8 +40,6 @@ function init() {
     if (!(snakePosition === fruitPosition)) {
       snakeArray.pop()
     }
-    console.log(snakeArray)
-    
   }
 
   function startingHead() {
@@ -56,6 +53,17 @@ function init() {
     squares.forEach((i) => i.className = 'grid-item')
   }
 
+  function endGame() {
+    clearInterval(timerStart)
+    console.log('end')
+  }
+
+  function snakeCollision() {
+    if (Array.from(new Set(snakeArray)).length !== snakeArray.length) {
+      endGame() 
+    }
+  }
+
   function randomFruit() {
     fruitPosition = Math.floor(Math.random() * squares.length)
     squares.forEach((i) => i.classList.remove('apple'))
@@ -65,9 +73,6 @@ function init() {
       squares.forEach((i) => i.classList.remove('apple'))
       squares[fruitPosition].classList.add('apple')
     }
-
-    
-    
   }
 
 
@@ -89,11 +94,12 @@ function init() {
     startingHead()
     snakeMovementArray()
     pointDetection()
+    snakeCollision()
   }
 
   function startGame() {
     if (!gamePlaying) {
-      const timerStart = setInterval(startMoving, speed)
+      timerStart = setInterval(startMoving, speed)
       gamePlaying = true
       snakeArray.pop()
     }

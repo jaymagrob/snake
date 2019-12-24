@@ -1,7 +1,7 @@
 //! Still to work on
-  //? High score
-  //? Score
-  //? Mobile keytouch
+//? Score  
+//? High score
+//? Mobile keytouch
 
 
 
@@ -18,10 +18,12 @@ function init() {
   let snakePosition = Math.floor(width * width / 2 )
   let snakeArray = [snakePosition]
   let fruitPosition = Math.floor(Math.random() * squares.length)
-  const speed = 100
+  const speed = 50
   let moveDirection = 1
   let gamePlaying = false
   let timerStart = ''
+  let score = 0
+  let pointsAvailable = 31
 
   // Make Table
   Array(width * width).join('.').split('.').forEach((i, index) => {
@@ -95,6 +97,9 @@ function init() {
     snakeMovementArray()
     pointDetection()
     snakeCollision()
+    --pointsAvailable
+    pointsAvailable = Math.max(10, pointsAvailable)
+
   }
 
   function startGame() {
@@ -107,7 +112,9 @@ function init() {
 
   function pointDetection() {
     if (snakePosition === fruitPosition) {
-      console.log('point')
+      score += pointsAvailable
+      pointsAvailable = 31
+      console.log(score)
       randomFruit()
     } 
   }
